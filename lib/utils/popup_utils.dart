@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
-import 'screen_utils.dart';
 import 'utils.dart';
 
 const dialogMaxWidth = 350.0;
@@ -21,14 +19,12 @@ Future<void> showConfirmDialog({
   bool autoDismiss = true,
   bool barrierDismissable = true,
 }) {
-  final styles = context.textStyles;
-
   return SmartDialog.show(
     clickMaskDismiss: barrierDismissable,
     builder: (_) {
       return AlertDialog(
-        title: Text(title ?? "Are you sure?", style: styles.titleLarge),
-        content: Text(message, style: styles.bodyLarge),
+        title: Text(title ?? "Are you sure?"),
+        content: Text(message),
         actions: [
           TextButton(
             onPressed: () {
@@ -59,13 +55,11 @@ Future<void> showInfoDialog({
   required String message,
   String? closeMsg,
 }) {
-  final styles = context.textStyles;
-
   return SmartDialog.show(
     builder: (_) {
-      return CustomDialog(
-        title: Text(title ?? "Info", style: styles.titleLarge),
-        content: Text(message, style: styles.bodyLarge),
+      return AlertDialog(
+        title: Text(title ?? "Info"),
+        content: Text(message),
         actions: [
           TextButton(
             onPressed: SmartDialog.dismiss,
@@ -260,58 +254,5 @@ class _StringInputDialogState extends State<StringInputDialog> {
   void dispose() {
     ctrl.dispose();
     super.dispose();
-  }
-}
-
-class CustomDialog extends StatelessWidget {
-  static const maxWidth = 350.0;
-
-  final Widget title;
-  final Widget content;
-  final List<Widget> actions;
-  final Color borderColor;
-
-  const CustomDialog({
-    super.key,
-    required this.title,
-    required this.content,
-    required this.actions,
-    this.borderColor = Colors.grey,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: paddingAllXXL,
-      constraints: const BoxConstraints(maxWidth: maxWidth),
-      decoration: BoxDecoration(
-        color: Colors.black,
-        // image: const DecorationImage(
-        //   image: AssetImage('assets/images/boards.jpg'),
-        //   fit: BoxFit.cover,
-        // ),
-        border: Border.all(
-          color: borderColor,
-          width: 2,
-        ),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15.0),
-        ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          title,
-          boxXXL,
-          content,
-          boxXXL,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: actions,
-          ),
-        ],
-      ),
-    );
   }
 }
