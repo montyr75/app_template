@@ -42,7 +42,7 @@ final class RegistrationFormCtrlProvider
 }
 
 String _$registrationFormCtrlHash() =>
-    r'ec9087e762dcc7cc7fd645d592f1264d762b56f0';
+    r'4b7a928d5f928902714410f3f5818ee7babfce12';
 
 abstract class _$RegistrationFormCtrl extends $Notifier<RegistrationFormState> {
   RegistrationFormState build();

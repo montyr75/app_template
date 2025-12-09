@@ -41,7 +41,7 @@ final class ThemeServiceProvider
   }
 }
 
-String _$themeServiceHash() => r'071fc7e6b95e61cd723c25ca9d782188d4a891b8';
+String _$themeServiceHash() => r'7ba6a333bd20bd2b3873fef87a07719200831b45';
 
 abstract class _$ThemeService extends $Notifier<ThemeState> {
   ThemeState build();
