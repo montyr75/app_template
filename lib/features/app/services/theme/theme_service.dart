@@ -2,7 +2,6 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../../utils/screen_utils.dart';
 import 'theme_state.dart';
 
 part 'theme_service.g.dart';
@@ -25,38 +24,38 @@ class ThemeService extends _$ThemeService {
     final textTheme = _buildTextTheme(data.textTheme);
   
     return data.copyWith(
-      filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(
-          backgroundColor: Colors.cyanAccent,
-          foregroundColor: Colors.black,
-          shape: const BeveledRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(sm)),
-          ),
-          textStyle: textTheme.titleSmall,
-        ),
-      ),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: Colors.white,
-          shape: const BeveledRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(sm)),
-          ),
-          textStyle: textTheme.titleSmall,
-        ),
-      ),
-      inputDecorationTheme: data.inputDecorationTheme.copyWith(
-        filled: false,
-      ),
-      popupMenuTheme: data.popupMenuTheme.copyWith(
-        color: Colors.black87,
-      ),
-      dialogTheme: data.dialogTheme.copyWith(
-        backgroundColor: Colors.black87,
-        shape: const BeveledRectangleBorder(
-          side: BorderSide(width: 2, color: Colors.white30),
-          borderRadius: BorderRadius.all(Radius.circular(med)),
-        ),
-      ),
+      // filledButtonTheme: FilledButtonThemeData(
+      //   style: FilledButton.styleFrom(
+      //     backgroundColor: Colors.cyanAccent,
+      //     foregroundColor: Colors.black,
+      //     shape: const BeveledRectangleBorder(
+      //       borderRadius: BorderRadius.all(Radius.circular(sm)),
+      //     ),
+      //     textStyle: textTheme.titleSmall,
+      //   ),
+      // ),
+      // outlinedButtonTheme: OutlinedButtonThemeData(
+      //   style: OutlinedButton.styleFrom(
+      //     foregroundColor: Colors.white,
+      //     shape: const BeveledRectangleBorder(
+      //       borderRadius: BorderRadius.all(Radius.circular(sm)),
+      //     ),
+      //     textStyle: textTheme.titleSmall,
+      //   ),
+      // ),
+      // inputDecorationTheme: data.inputDecorationTheme.copyWith(
+      //   filled: false,
+      // ),
+      // popupMenuTheme: data.popupMenuTheme.copyWith(
+      //   color: Colors.black87,
+      // ),
+      // dialogTheme: data.dialogTheme.copyWith(
+      //   backgroundColor: Colors.black87,
+      //   shape: const BeveledRectangleBorder(
+      //     side: BorderSide(width: 2, color: Colors.white30),
+      //     borderRadius: BorderRadius.all(Radius.circular(med)),
+      //   ),
+      // ),
       textTheme: textTheme,
     );
   }

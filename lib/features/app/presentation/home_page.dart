@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../routes.dart';
 import '../../../../utils/screen_utils.dart';
+import '../../auth/presentation/login_dialog.dart';
 import '../services/app/app_service.dart';
 
 class HomePage extends ConsumerWidget {
@@ -32,13 +33,18 @@ class HomePage extends ConsumerWidget {
           padding: paddingAllM,
           child: Column(
             children: [
-              const Expanded(
+              Expanded(
                 child: SingleChildScrollView(
                   child: Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("Home Page"),
+                        const Text("Home Page"),
+                        boxXXL,
+                        FilledButton(
+                          onPressed: () => LoginDialog.show(context),
+                          child: const Text("Sign In"),
+                        ),
                       ],
                     ),
                   ),

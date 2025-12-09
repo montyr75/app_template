@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'theme_service.dart';
+part of 'auth_service.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,52 +9,52 @@ part of 'theme_service.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(ThemeService)
-const themeServiceProvider = ThemeServiceProvider._();
+@ProviderFor(AuthService)
+const authServiceProvider = AuthServiceProvider._();
 
-final class ThemeServiceProvider
-    extends $NotifierProvider<ThemeService, ThemeState> {
-  const ThemeServiceProvider._()
+final class AuthServiceProvider
+    extends $NotifierProvider<AuthService, AuthState> {
+  const AuthServiceProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'themeServiceProvider',
-        isAutoDispose: true,
+        name: r'authServiceProvider',
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$themeServiceHash();
+  String debugGetCreateSourceHash() => _$authServiceHash();
 
   @$internal
   @override
-  ThemeService create() => ThemeService();
+  AuthService create() => AuthService();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(ThemeState value) {
+  Override overrideWithValue(AuthState value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<ThemeState>(value),
+      providerOverride: $SyncValueProvider<AuthState>(value),
     );
   }
 }
 
-String _$themeServiceHash() => r'071fc7e6b95e61cd723c25ca9d782188d4a891b8';
+String _$authServiceHash() => r'65a29569028c50369d7782a13fc6658bf79bfb53';
 
-abstract class _$ThemeService extends $Notifier<ThemeState> {
-  ThemeState build();
+abstract class _$AuthService extends $Notifier<AuthState> {
+  AuthState build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<ThemeState, ThemeState>;
+    final ref = this.ref as $Ref<AuthState, AuthState>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<ThemeState, ThemeState>,
-              ThemeState,
+              AnyNotifier<AuthState, AuthState>,
+              AuthState,
               Object?,
               Object?
             >;
