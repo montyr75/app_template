@@ -70,6 +70,7 @@ class _EmailInputState extends ConsumerState<_EmailInput> {
   @override
   Widget build(BuildContext context) {
     final field = ref.watch(registrationFormCtrlProvider.select((state) => state.email));
+    final showError = ref.watch(registrationFormCtrlProvider.select((state) => state.hasSubmitted));
 
     return TextFormField(
       key: const Key('${formName}_${_EmailInput.inputName}_textField'),
@@ -84,7 +85,7 @@ class _EmailInputState extends ConsumerState<_EmailInput> {
       autofillHints: const [AutofillHints.email],
       decoration: InputDecoration(
         labelText: _EmailInput.inputName,
-        errorText: field.displayError?.errorMsg,
+        errorText: showError ? field.displayError?.errorMsg : null,
         isDense: true,
         border: const OutlineInputBorder(),
       ),
@@ -100,6 +101,7 @@ class _PasswordInput extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final field = ref.watch(registrationFormCtrlProvider.select((state) => state.password));
+    final showError = ref.watch(registrationFormCtrlProvider.select((state) => state.hasSubmitted));
 
     return TextFormField(
       key: const Key('${formName}_${inputName}_textField'),
@@ -115,7 +117,7 @@ class _PasswordInput extends ConsumerWidget {
       autofillHints: const [AutofillHints.newPassword],
       decoration: InputDecoration(
         labelText: inputName,
-        errorText: field.displayError?.errorMsg,
+        errorText: showError ? field.displayError?.errorMsg : null,
         isDense: true,
         border: const OutlineInputBorder(),
       ),
@@ -131,6 +133,7 @@ class _ConfirmPasswordInput extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final field = ref.watch(registrationFormCtrlProvider.select((state) => state.confirmPassword));
+    final showError = ref.watch(registrationFormCtrlProvider.select((state) => state.hasSubmitted));
 
     return TextFormField(
       key: const Key('${formName}_${inputName}_textField'),
@@ -146,7 +149,7 @@ class _ConfirmPasswordInput extends ConsumerWidget {
       autofillHints: const [AutofillHints.newPassword],
       decoration: InputDecoration(
         labelText: inputName,
-        errorText: field.displayError?.errorMsg,
+        errorText: showError ? field.displayError?.errorMsg : null,
         isDense: true,
         border: const OutlineInputBorder(),
       ),
