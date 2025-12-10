@@ -9,14 +9,16 @@ import 'login_form.dart';
 import 'registration_form.dart';
 
 class LoginDialog extends ConsumerStatefulWidget {
-  const LoginDialog({super.key});
-
-  static void show(BuildContext context) {
-    SmartDialog.show(
+  static Future<bool> show() async {
+    final result = await SmartDialog.show<bool>(
       builder: (_) => const LoginDialog(),
       clickMaskDismiss: false,
     );
+
+    return result ?? false;
   }
+
+  const LoginDialog({super.key});
 
   @override
   ConsumerState<LoginDialog> createState() => _LoginDialogState();
@@ -32,7 +34,7 @@ class _LoginDialogState extends ConsumerState<LoginDialog> {
     // Listen for a successful login to automatically dismiss the dialog.
     ref.listen<AuthState>(authServiceProvider, (previous, next) {
       if (next.isLoggedIn && (previous?.isLoggedIn == false)) {
-        SmartDialog.dismiss();
+        SmartDialog.dismiss(result: true);
       }
     });
 
