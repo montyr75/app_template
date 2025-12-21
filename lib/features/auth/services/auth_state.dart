@@ -1,6 +1,11 @@
+import 'package:dart_mappable/dart_mappable.dart';
+
 import '../models/app_user.dart';
 
-class AuthState {
+part 'auth_state.mapper.dart';
+
+@MappableClass()
+class AuthState with AuthStateMappable {
   final bool isLoading;
   final AppUser? user;
 
@@ -9,17 +14,7 @@ class AuthState {
     this.user,
   });
 
-  AuthState copyWith({
-    bool? isLoading,
-    AppUser? user,
-  }) {
-    return AuthState(
-      isLoading: isLoading ?? this.isLoading,
-      user: user ?? this.user,
-    );
-  }
-
-  AuthState logout() => AuthState(isLoading: isLoading);
+  AuthState logout() => copyWith(user: null);
 
   bool get isLoggedIn => user != null;
 }
