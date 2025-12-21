@@ -42,7 +42,7 @@ class HomePage extends ConsumerWidget {
                         const Text("Home Page"),
                         boxXXL,
                         FilledButton(
-                          onPressed: () => LoginDialog.show(context),
+                          onPressed: () => LoginDialog.show(),
                           child: const Text("Sign In"),
                         ),
                       ],
