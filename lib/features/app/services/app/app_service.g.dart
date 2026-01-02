@@ -10,10 +10,10 @@ part of 'app_service.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(AppService)
-const appServiceProvider = AppServiceProvider._();
+final appServiceProvider = AppServiceProvider._();
 
 final class AppServiceProvider extends $NotifierProvider<AppService, AppState> {
-  const AppServiceProvider._()
+  AppServiceProvider._()
     : super(
         from: null,
         argument: null,
@@ -47,7 +47,6 @@ abstract class _$AppService extends $Notifier<AppState> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AppState, AppState>;
     final element =
         ref.element
@@ -57,12 +56,12 @@ abstract class _$AppService extends $Notifier<AppState> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(packageInfo)
-const packageInfoProvider = PackageInfoProvider._();
+final packageInfoProvider = PackageInfoProvider._();
 
 final class PackageInfoProvider
     extends
@@ -72,7 +71,7 @@ final class PackageInfoProvider
           FutureOr<PackageInfo>
         >
     with $FutureModifier<PackageInfo>, $FutureProvider<PackageInfo> {
-  const PackageInfoProvider._()
+  PackageInfoProvider._()
     : super(
         from: null,
         argument: null,

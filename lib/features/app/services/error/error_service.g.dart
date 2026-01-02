@@ -10,11 +10,11 @@ part of 'error_service.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(ErrorService)
-const errorServiceProvider = ErrorServiceProvider._();
+final errorServiceProvider = ErrorServiceProvider._();
 
 final class ErrorServiceProvider
     extends $NotifierProvider<ErrorService, AppError?> {
-  const ErrorServiceProvider._()
+  ErrorServiceProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,7 +48,6 @@ abstract class _$ErrorService extends $Notifier<AppError?> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<AppError?, AppError?>;
     final element =
         ref.element
@@ -58,6 +57,6 @@ abstract class _$ErrorService extends $Notifier<AppError?> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }

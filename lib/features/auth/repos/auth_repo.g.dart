@@ -10,12 +10,12 @@ part of 'auth_repo.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(firebaseAuth)
-const firebaseAuthProvider = FirebaseAuthProvider._();
+final firebaseAuthProvider = FirebaseAuthProvider._();
 
 final class FirebaseAuthProvider
     extends $FunctionalProvider<FirebaseAuth, FirebaseAuth, FirebaseAuth>
     with $Provider<FirebaseAuth> {
-  const FirebaseAuthProvider._()
+  FirebaseAuthProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,12 +51,12 @@ final class FirebaseAuthProvider
 String _$firebaseAuthHash() => r'8c3e9d11b27110ca96130356b5ef4d5d34a5ffc2';
 
 @ProviderFor(authRepo)
-const authRepoProvider = AuthRepoProvider._();
+final authRepoProvider = AuthRepoProvider._();
 
 final class AuthRepoProvider
     extends $FunctionalProvider<AuthRepo, AuthRepo, AuthRepo>
     with $Provider<AuthRepo> {
-  const AuthRepoProvider._()
+  AuthRepoProvider._()
     : super(
         from: null,
         argument: null,
@@ -92,13 +92,13 @@ final class AuthRepoProvider
 String _$authRepoHash() => r'a9e73017b21006fd4d6d61bc5f1cde0e93ccc79d';
 
 @ProviderFor(authStateChanges)
-const authStateChangesProvider = AuthStateChangesProvider._();
+final authStateChangesProvider = AuthStateChangesProvider._();
 
 final class AuthStateChangesProvider
     extends
         $FunctionalProvider<AsyncValue<AppUser?>, AppUser?, Stream<AppUser?>>
     with $FutureModifier<AppUser?>, $StreamProvider<AppUser?> {
-  const AuthStateChangesProvider._()
+  AuthStateChangesProvider._()
     : super(
         from: null,
         argument: null,

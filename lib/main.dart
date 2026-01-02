@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import 'app_config.dart';
 import 'features/app/services/app/app_service.dart';
 import 'features/app/services/theme/theme_service.dart';
 import 'routes.dart';
@@ -18,7 +19,7 @@ Future<void> main() async {
   runApp(const ProviderScope(child: App()));
 }
 
-class App extends ConsumerWidget {
+class App extends ConsumerWidget with WidgetsBindingObserver {
   const App({super.key});
 
   @override
@@ -37,5 +38,32 @@ class App extends ConsumerWidget {
       routerConfig: ref.watch(goRouterProvider),
       builder: FlutterSmartDialog.init(),
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        log.info('App in foreground - User can interact');
+        break;
+
+      case AppLifecycleState.inactive:
+        log.info('App inactive - Transitional state');
+        break;
+
+      case AppLifecycleState.paused:
+        log.info('App in background - Not visible');
+        break;
+
+      case AppLifecycleState.detached:
+        log.info('App detached - About to be terminated');
+        break;
+
+      case AppLifecycleState.hidden:
+        log.info('App hidden - All views obscured');
+        break;
+    }
   }
 }

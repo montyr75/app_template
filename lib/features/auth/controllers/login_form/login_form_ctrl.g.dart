@@ -10,11 +10,11 @@ part of 'login_form_ctrl.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(LoginFormCtrl)
-const loginFormCtrlProvider = LoginFormCtrlProvider._();
+final loginFormCtrlProvider = LoginFormCtrlProvider._();
 
 final class LoginFormCtrlProvider
     extends $NotifierProvider<LoginFormCtrl, LoginFormState> {
-  const LoginFormCtrlProvider._()
+  LoginFormCtrlProvider._()
     : super(
         from: null,
         argument: null,
@@ -48,7 +48,6 @@ abstract class _$LoginFormCtrl extends $Notifier<LoginFormState> {
   @$mustCallSuper
   @override
   void runBuild() {
-    final created = build();
     final ref = this.ref as $Ref<LoginFormState, LoginFormState>;
     final element =
         ref.element
@@ -58,6 +57,6 @@ abstract class _$LoginFormCtrl extends $Notifier<LoginFormState> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    element.handleCreate(ref, build);
   }
 }
