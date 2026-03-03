@@ -1,0 +1,5 @@
+{
+    "buildRunner.buildArgs": [
+        "--delete-conflicting-outputs"
+    ]
+}
