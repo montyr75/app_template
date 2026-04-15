@@ -14,7 +14,7 @@ class LoggerService {
   final bool forceLogging;
 
   LoggerService({this.appName = "my_app", this.debugMode = true, this.verbose = false, this.forceLogging = false}) {
-    Logger.root.level = Level.ALL;
+    Logger.root.level = debugMode ? Level.ALL : Level.WARNING;
 
     Logger.root.onRecord.listen(verbose ? _verboseRecordHandler  : _recordHandler);
 
