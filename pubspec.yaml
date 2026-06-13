@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 0.0.1
 
 environment:
-  sdk: ^3.10.3
+  sdk: ^3.12.2
 
 dependencies:
   awesome_flutter_extensions: ^2.0.1
