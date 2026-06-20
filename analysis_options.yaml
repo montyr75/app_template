@@ -30,7 +30,6 @@ linter:
     sort_pub_dependencies: true
     type_annotate_public_apis: true
     unnecessary_getters_setters: true
-    use_if_null_to_convert_nulls_to_bools: true
 
 formatter:
   page_width: 120

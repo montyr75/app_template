@@ -47,7 +47,7 @@ abstract class _$ErrorService extends $Notifier<AppError?> {
   AppError? build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AppError?, AppError?>;
     final element =
         ref.element
@@ -57,6 +57,6 @@ abstract class _$ErrorService extends $Notifier<AppError?> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

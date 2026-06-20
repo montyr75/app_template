@@ -47,7 +47,7 @@ abstract class _$LoginFormCtrl extends $Notifier<LoginFormState> {
   LoginFormState build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<LoginFormState, LoginFormState>;
     final element =
         ref.element
@@ -57,6 +57,6 @@ abstract class _$LoginFormCtrl extends $Notifier<LoginFormState> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
