@@ -1,6 +1,6 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../utils/screen_utils.dart';
 import '../../app/services/theme/theme_service.dart';

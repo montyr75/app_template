@@ -1,8 +1,7 @@
 import 'package:awesome_flutter_extensions/awesome_flutter_extensions.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../routes.dart';
 import '../../../../utils/screen_utils.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show ThemeMode, ThemeData;
+import 'package:material_ui/material_ui.dart' show ThemeMode, ThemeData;
 
 class ThemeState {
   final ThemeMode mode;

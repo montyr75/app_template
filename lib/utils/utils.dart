@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 
 final infinity = String.fromCharCode(0x221E);

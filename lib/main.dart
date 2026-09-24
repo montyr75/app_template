@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'app_config.dart';
 import 'features/app/services/app/app_service.dart';
@@ -36,7 +36,9 @@ class App extends ConsumerWidget with WidgetsBindingObserver {
       themeMode: themeState.mode,
       restorationScopeId: 'app',
       routerConfig: ref.watch(goRouterProvider),
-      builder: FlutterSmartDialog.init(),
+      // Bridges theme/localizations to packages still on package:flutter/material.dart (e.g. awesome_flutter_extensions).
+      // ignore: deprecated_member_use
+      builder: (context, child) => MaterialUiCompatibilityBridge(child: FlutterSmartDialog.init()(context, child)),
     );
   }
 
