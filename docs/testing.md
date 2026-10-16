@@ -13,7 +13,7 @@ which breaks the `cmd /c` calls inside them.
 | Layer | What it is | Status | Run it with |
 |---|---|---|---|
 | Pure logic | Decision functions factored out of services (`authRedirect`, `reduceUserChange`) and, as the app grows, its rules engines over a seeded `Random` | built for the kernel | `flutter test` |
-| Widget tests | Each screen at its design surface, asserting copy, states, keys, and no overflow | none yet | `flutter test` |
+| Widget tests | Each screen at its design surface, asserting copy, states, keys, and no overflow, and ending with `expectDesktopReady` (`test/support/interaction_checks.dart`), which fails on a tappable `GestureDetector` with no click cursor and on an icon-only control with no tooltip | the guard and `TapTarget`'s tests (`test/widgets/`) | `flutter test` |
 | Table harness, fake backend | `TestTable` (`test/support/table/table.dart`) seats N users, each a `ProviderContainer` with its own `MockFirebaseAuth` over one shared `SerialFakeFirestore`, driving the real services | skeleton: seats sign in (`sign_in_scenarios.dart`) | `flutter test` (`test/table/`) |
 | Table harness, emulator backend | The same scenario lists with one named `FirebaseApp` per seat, signed in as `p1@app-template.test`, `p2@app-template.test`, and so on, so transactions contend for real and the security rules apply; `emulatorOnly` scenarios run only here | skeleton | `tool\emulators\test.cmd` (`integration_test/*_table_test.dart`) |
 | Emulator smoke test | Two named apps sign in with distinct uids, and a write the rules forbid throws `permission-denied` | built | `tool\emulators\test.cmd integration_test\emulator_smoke_test.dart` |
@@ -69,6 +69,15 @@ Debug builds start the Marionette binding (`main.dart`), configured in `lib/dev/
 `package:logging`, so every `log.*` line is collected). Because the app imports `material_ui`, its Material controls
 are registered in the config by type; register every custom interactive widget there too and return its label from
 `extractText`.
+
+### Controls are real controls
+
+Every tappable control is a real button (ARCHITECTURE.md §9.1): button semantics with a label, keyboard focus with
+Enter and Space, the click cursor on hover and the basic cursor when disabled, visible states, and a tooltip when it
+shows no text. Material's buttons qualify; a custom shape is built on `TapTarget` (`lib/widgets/tap_target.dart`),
+never on a bare `GestureDetector`, and comes with a widget test that pins its cursor and its keyboard activation
+(`test/widgets/tap_target_test.dart` is the model). Every control built on `TapTarget` is registered by type in
+`lib/dev/marionette_config.dart`.
 
 ### Keys
 

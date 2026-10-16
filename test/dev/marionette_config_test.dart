@@ -1,4 +1,5 @@
 import 'package:app_template/dev/marionette_config.dart';
+import 'package:app_template/widgets/tap_target.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:marionette_logging/marionette_logging.dart';
 import 'package:material_ui/material_ui.dart';
@@ -19,6 +20,7 @@ void main() {
               FilledButton(onPressed: () {}, child: const Text('Go')),
               const Text('Plain'),
               TextField(controller: TextEditingController(text: 'typed')),
+              TapTarget(onTap: () {}, tooltip: 'Close', child: const Icon(Icons.close)),
             ],
           ),
         ),
@@ -35,5 +37,9 @@ void main() {
     expect(config.isInteractiveElement!(text), isFalse);
     expect(config.extractText!(field), 'typed');
     expect(config.extractText!(text), isNull);
+
+    final target = tester.element(find.byType(TapTarget));
+    expect(config.isInteractiveElement!(target), isTrue);
+    expect(config.extractText!(target), 'Close');
   });
 }

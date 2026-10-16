@@ -2,7 +2,8 @@
 
 **app_template** is the kernel every new Flutter app in `C:\Projects\www\Dart\_flutter\` starts from: the app, error,
 logger, and theme services, auth with gating, the Firestore repo, routes, popups, the version display, and the agent
-testing scaffolding. It has no features of its own and gets none: changes here are to the kernel, and they land in the
+testing scaffolding, and `TapTarget`, the primitive every custom control is built on (ARCHITECTURE.md §9.1). It has
+no features of its own and gets none: changes here are to the kernel, and they land in the
 next app copied from it.
 
 Read `../ARCHITECTURE.md` first: it is the architecture this repo embodies, section by section. `docs/testing.md` is
