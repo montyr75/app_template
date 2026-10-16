@@ -42,6 +42,7 @@ class SettingsPage extends ConsumerWidget {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 400.0),
                     child: SegmentedButton<ThemeMode>(
+                      key: const ValueKey('settings_themeModeSegments'),
                       segments: const [
                         ButtonSegment(
                           value: ThemeMode.system,

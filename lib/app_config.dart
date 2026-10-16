@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:uuid/uuid.dart';
 
 import 'features/app/services/logger_service.dart';
 
@@ -8,3 +9,5 @@ const debugMode = !kReleaseMode;
 
 // create logger
 final log = LoggerService(appName: appName, debugMode: debugMode);
+
+const uuid = Uuid();

@@ -22,6 +22,7 @@ class NotFoundPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             TextButton(
+              key: const ValueKey('notFound_homeButton'),
               onPressed: () => context.goNamed(AppRoute.home.name),
               child: const Text('Home'),
             ),

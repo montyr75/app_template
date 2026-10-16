@@ -4,11 +4,13 @@ class AppUser {
   final String id;
   final String email;
   final String displayName;
+  final String? photoUrl;
 
-  AppUser({
+  const AppUser({
     required this.id,
     required this.email,
     required this.displayName,
+    this.photoUrl,
   });
 
   factory AppUser.fromFBUser(User user) {
@@ -16,11 +18,21 @@ class AppUser {
       id: user.uid,
       email: user.email ?? '',
       displayName: user.displayName ?? '',
+      photoUrl: user.photoURL,
     );
   }
 
   @override
-  String toString() {
-    return 'User{id: $id, email: $email, displayName: $displayName}';
-  }
+  bool operator ==(Object other) =>
+      other is AppUser &&
+      other.id == id &&
+      other.email == email &&
+      other.displayName == displayName &&
+      other.photoUrl == photoUrl;
+
+  @override
+  int get hashCode => Object.hash(id, email, displayName, photoUrl);
+
+  @override
+  String toString() => 'AppUser{id: $id, email: $email, displayName: $displayName}';
 }

@@ -2,46 +2,38 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../../../utils/screen_utils.dart';
+import '../../../utils/screen_utils.dart';
 import '../controllers/registration_form/registration_form_ctrl.dart';
 import '../services/auth_service.dart';
-
-const formName = 'reg_form';
 
 class RegistrationForm extends StatelessWidget {
   const RegistrationForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _buildLoginSection(context),
+        AutofillGroup(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _EmailInput(),
+              boxXL,
+              _PasswordInput(),
+              boxXL,
+              _ConfirmPasswordInput(),
+            ],
+          ),
+        ),
         boxXXL,
-        const _SubmitButton(),
+        _SubmitButton(),
       ],
-    );
-  }
-
-  Widget _buildLoginSection(BuildContext context) {
-    return const AutofillGroup(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _EmailInput(),
-          boxXL,
-          _PasswordInput(),
-          boxXL,
-          _ConfirmPasswordInput(),
-        ],
-      ),
     );
   }
 }
 
 class _EmailInput extends ConsumerStatefulWidget {
-  static const inputName = "Email";
-
   const _EmailInput();
 
   @override
@@ -54,11 +46,7 @@ class _EmailInputState extends ConsumerState<_EmailInput> {
   @override
   void initState() {
     super.initState();
-    // Programmatically request focus after the first frame is built.
-    // This is more reliable than `autofocus: true` in dialogs.
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _focusNode.requestFocus();
-    });
+    SchedulerBinding.instance.addPostFrameCallback((_) => _focusNode.requestFocus());
   }
 
   @override
@@ -73,10 +61,10 @@ class _EmailInputState extends ConsumerState<_EmailInput> {
     final showError = ref.watch(registrationFormCtrlProvider.select((state) => state.hasSubmitted));
 
     return TextFormField(
-      key: const Key('${formName}_${_EmailInput.inputName}_textField'),
+      key: const ValueKey('register_emailField'),
       focusNode: _focusNode,
       initialValue: field.value,
-      onChanged: (value) => ref.read(registrationFormCtrlProvider.notifier).emailChanged(value),
+      onChanged: ref.read(registrationFormCtrlProvider.notifier).emailChanged,
       onFieldSubmitted: (_) => ref.read(registrationFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
@@ -84,18 +72,14 @@ class _EmailInputState extends ConsumerState<_EmailInput> {
       autocorrect: false,
       autofillHints: const [AutofillHints.email],
       decoration: InputDecoration(
-        labelText: _EmailInput.inputName,
+        labelText: 'Email',
         errorText: showError ? field.displayError?.errorMsg : null,
-        isDense: true,
-        border: const OutlineInputBorder(),
       ),
     );
   }
 }
 
 class _PasswordInput extends ConsumerWidget {
-  static const inputName = "Password";
-
   const _PasswordInput();
 
   @override
@@ -104,10 +88,10 @@ class _PasswordInput extends ConsumerWidget {
     final showError = ref.watch(registrationFormCtrlProvider.select((state) => state.hasSubmitted));
 
     return TextFormField(
-      key: const Key('${formName}_${inputName}_textField'),
+      key: const ValueKey('register_passwordField'),
       initialValue: field.value,
       obscureText: true,
-      onChanged: (value) => ref.read(registrationFormCtrlProvider.notifier).passwordChanged(value),
+      onChanged: ref.read(registrationFormCtrlProvider.notifier).passwordChanged,
       onFieldSubmitted: (_) => ref.read(registrationFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
@@ -116,18 +100,14 @@ class _PasswordInput extends ConsumerWidget {
       enableIMEPersonalizedLearning: false,
       autofillHints: const [AutofillHints.newPassword],
       decoration: InputDecoration(
-        labelText: inputName,
+        labelText: 'Password',
         errorText: showError ? field.displayError?.errorMsg : null,
-        isDense: true,
-        border: const OutlineInputBorder(),
       ),
     );
   }
 }
 
 class _ConfirmPasswordInput extends ConsumerWidget {
-  static const inputName = "Confirm Password";
-
   const _ConfirmPasswordInput();
 
   @override
@@ -136,10 +116,10 @@ class _ConfirmPasswordInput extends ConsumerWidget {
     final showError = ref.watch(registrationFormCtrlProvider.select((state) => state.hasSubmitted));
 
     return TextFormField(
-      key: const Key('${formName}_${inputName}_textField'),
+      key: const ValueKey('register_confirmPasswordField'),
       initialValue: field.value,
       obscureText: true,
-      onChanged: (value) => ref.read(registrationFormCtrlProvider.notifier).confirmPasswordChanged(value),
+      onChanged: ref.read(registrationFormCtrlProvider.notifier).confirmPasswordChanged,
       onFieldSubmitted: (_) => ref.read(registrationFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.go,
@@ -148,18 +128,14 @@ class _ConfirmPasswordInput extends ConsumerWidget {
       enableIMEPersonalizedLearning: false,
       autofillHints: const [AutofillHints.newPassword],
       decoration: InputDecoration(
-        labelText: inputName,
+        labelText: 'Confirm Password',
         errorText: showError ? field.displayError?.errorMsg : null,
-        isDense: true,
-        border: const OutlineInputBorder(),
       ),
     );
   }
 }
 
 class _SubmitButton extends ConsumerWidget {
-  static const inputName = "Register";
-
   const _SubmitButton();
 
   @override
@@ -168,9 +144,9 @@ class _SubmitButton extends ConsumerWidget {
 
     return !isLoading
         ? FilledButton(
-            key: const Key('${formName}_${inputName}_button'),
+            key: const ValueKey('register_registerButton'),
             onPressed: () => ref.read(registrationFormCtrlProvider.notifier).submit(),
-            child: const Text(inputName),
+            child: const Text('Register'),
           )
         : const CircularProgressIndicator();
   }

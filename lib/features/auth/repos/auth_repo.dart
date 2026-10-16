@@ -6,6 +6,7 @@ import '../models/app_user.dart';
 
 part 'auth_repo.g.dart';
 
+/// The only source of the Auth client (the test harness overrides it per seat).
 @Riverpod(keepAlive: true)
 FirebaseAuth firebaseAuth(Ref ref) => FirebaseAuth.instance;
 
@@ -16,58 +17,64 @@ AuthRepo authRepo(Ref ref) => AuthRepo(ref: ref, firebaseAuth: ref.watch(firebas
 Stream<AppUser?> authStateChanges(Ref ref) =>
     ref.watch(authRepoProvider).authStateChanges.map((user) => user != null ? AppUser.fromFBUser(user) : null);
 
+/// Email and password sign-in. Google sign-in (`signInWithPopup` on web, `google_sign_in` on Android, iOS, and macOS)
+/// is added per app; Windows stays email and password (ARCHITECTURE.md §8.3).
 class AuthRepo {
   final Ref ref;
   final FirebaseAuth _firebaseAuth;
 
-  AuthRepo({required this.ref, required FirebaseAuth firebaseAuth}) : _firebaseAuth = firebaseAuth;
+  AuthRepo({required this.ref, required this._firebaseAuth});
 
   Future<void> register({required String email, required String password}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } catch (e) {
-      _handleError(error: e);
+      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+    } catch (e, st) {
+      _handleError(error: e, stackTrace: st, message: "Failed to register.");
     }
   }
 
   Future<void> loginWithEmailAndPassword({required String email, required String password}) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } catch (e) {
-      _handleError(error: e);
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+    } catch (e, st) {
+      _handleError(error: e, stackTrace: st, message: "Failed to sign in.");
     }
   }
 
-  void _handleError({Object? error, StackTrace? stackTrace, String? message}) {
-    final errorService = ref.read(errorServiceProvider.notifier);
-    String? msg;
-
-    if (error is FirebaseAuthException) {
-      msg = error.message?.replaceAll(RegExp(r'\[.*?\]'), '').trim();
-    } else if (message != null) {
-      msg = message;
+  Future<void> sendPasswordResetEmail({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e, st) {
+      _handleError(error: e, stackTrace: st, message: "Failed to send the password reset email.");
     }
-
-    errorService.onError(
-      provider: authRepoProvider,
-      error: AppError(
-        error: error,
-        message: msg ?? "Unknown server error.",
-        showAlert: true,
-      ),
-      st: stackTrace,
-    );
   }
 
   Future<void> logout() => _firebaseAuth.signOut();
 
-  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+  /// `userChanges` rather than `authStateChanges`, so a display-name edit re-emits the user.
+  Stream<User?> get authStateChanges => _firebaseAuth.userChanges();
 
-  AppUser? get currentUser => _firebaseAuth.currentUser != null ? AppUser.fromFBUser(_firebaseAuth.currentUser!) : null;
+  AppUser? get currentUser {
+    final user = _firebaseAuth.currentUser;
+    return user != null ? AppUser.fromFBUser(user) : null;
+  }
+
+  void _handleError({Object? error, StackTrace? stackTrace, String? message}) {
+    String? msg;
+
+    // Firebase's messages arrive as "[firebase_auth/code] The message."; the user sees the message alone.
+    if (error is FirebaseAuthException && error.message != null) {
+      msg = error.message!.replaceAll(RegExp(r'\[.*?\]'), '').trim();
+    } else if (message != null) {
+      msg = message;
+    }
+
+    ref
+        .read(errorServiceProvider.notifier)
+        .onError(
+          provider: authRepoProvider,
+          error: AppError(error: error, message: msg ?? "Unknown server error.", showAlert: true),
+          st: stackTrace,
+        );
+  }
 }

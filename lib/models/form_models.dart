@@ -66,10 +66,9 @@ class RequiredFirebaseNewPasswordFormField extends StringFormField {
   ValidationError? validator(String value) {
     final password = value.trim();
 
-    if (password.isEmpty){
+    if (password.isEmpty) {
       return ValidationError.empty;
-    }
-    else if (password.length < 6) {
+    } else if (password.length < 6) {
       return ValidationError.invalidNewFirebasePassword;
     }
 
@@ -197,7 +196,10 @@ class URLFormField extends FormzInput<String, ValidationError> {
 
   @override
   ValidationError? validator(String value) {
-    return value.isEmpty || isURL(value, allowUnderscore: true, requireProtocol: true, protocols: const ['http', 'https']) ? null : ValidationError.invalid;
+    return value.isEmpty ||
+            isURL(value, allowUnderscore: true, requireProtocol: true, protocols: const ['http', 'https'])
+        ? null
+        : ValidationError.invalid;
   }
 
   // use this to avoid getting an empty string as a valid value

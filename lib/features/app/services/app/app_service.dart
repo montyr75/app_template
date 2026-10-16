@@ -17,9 +17,9 @@ class AppService extends _$AppService {
           ref
               .read(errorServiceProvider.notifier)
               .onError(
-            provider: appServiceProvider,
-            error: AppError(message: "Error loading app version."),
-          );
+                provider: appServiceProvider,
+                error: AppError(message: "Error loading app version."),
+              );
         },
         // No action needed on loading, the state will just not have the version yet.
         loading: () {},

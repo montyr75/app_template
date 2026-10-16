@@ -8,13 +8,17 @@ part of 'auth_repo.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// The only source of the Auth client (the test harness overrides it per seat).
 
 @ProviderFor(firebaseAuth)
 final firebaseAuthProvider = FirebaseAuthProvider._();
 
+/// The only source of the Auth client (the test harness overrides it per seat).
+
 final class FirebaseAuthProvider
     extends $FunctionalProvider<FirebaseAuth, FirebaseAuth, FirebaseAuth>
     with $Provider<FirebaseAuth> {
+  /// The only source of the Auth client (the test harness overrides it per seat).
   FirebaseAuthProvider._()
     : super(
         from: null,

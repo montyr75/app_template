@@ -16,7 +16,7 @@ class LoggerService {
   LoggerService({this.appName = "my_app", this.debugMode = true, this.verbose = false, this.forceLogging = false}) {
     Logger.root.level = debugMode ? Level.ALL : Level.WARNING;
 
-    Logger.root.onRecord.listen(verbose ? _verboseRecordHandler  : _recordHandler);
+    Logger.root.onRecord.listen(verbose ? _verboseRecordHandler : _recordHandler);
 
     _logger = Logger(appName);
   }
@@ -27,8 +27,7 @@ class LoggerService {
     if (debugMode) {
       debugPrint(msg);
       _errorHandler(rec);
-    }
-    else {
+    } else {
       // for better response time, do it async (since the onRecord stream is sync)
       Future(() {
         debugPrint(msg);
@@ -40,8 +39,10 @@ class LoggerService {
   void _verboseRecordHandler(LogRecord rec) {
     // for better response time, do it async (since the onRecord stream is sync)
     Future(() {
-      debugPrint("${rec.time}:${rec.loggerName}:${rec.sequenceNumber}\n"
-          "${rec.level}: ${rec.message}");
+      debugPrint(
+        "${rec.time}:${rec.loggerName}:${rec.sequenceNumber}\n"
+        "${rec.level}: ${rec.message}",
+      );
 
       _errorHandler(rec);
     });
@@ -58,38 +59,29 @@ class LoggerService {
   }
 
   /// Log message at level [Level.FINEST].
-  void finest(Object? message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.finest(message, error, stackTrace);
+  void finest(Object? message, [Object? error, StackTrace? stackTrace]) => _logger.finest(message, error, stackTrace);
 
   /// Log message at level [Level.FINER].
-  void finer(Object? message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.finer(message, error, stackTrace);
+  void finer(Object? message, [Object? error, StackTrace? stackTrace]) => _logger.finer(message, error, stackTrace);
 
   /// Log message at level [Level.FINE].
-  void fine(Object? message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.fine(message, error, stackTrace);
+  void fine(Object? message, [Object? error, StackTrace? stackTrace]) => _logger.fine(message, error, stackTrace);
 
   /// Log message at level [Level.CONFIG].
-  void config(Object? message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.config(message, error, stackTrace);
+  void config(Object? message, [Object? error, StackTrace? stackTrace]) => _logger.config(message, error, stackTrace);
 
   /// Log message at level [Level.INFO].
-  void info(Object? message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.info(message, error, stackTrace);
+  void info(Object? message, [Object? error, StackTrace? stackTrace]) => _logger.info(message, error, stackTrace);
 
   /// Log message at level [Level.WARNING].
-  void warning(Object? message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.warning(message, error, stackTrace);
+  void warning(Object? message, [Object? error, StackTrace? stackTrace]) => _logger.warning(message, error, stackTrace);
 
   /// Log message at level [Level.SEVERE].
-  void error(Object? message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.severe(message, error, stackTrace);
+  void error(Object? message, [Object? error, StackTrace? stackTrace]) => _logger.severe(message, error, stackTrace);
 
   /// Log message at level [Level.SEVERE].
-  void severe(Object? message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.severe(message, error, stackTrace);
+  void severe(Object? message, [Object? error, StackTrace? stackTrace]) => _logger.severe(message, error, stackTrace);
 
   /// Log message at level [Level.SHOUT].
-  void shout(Object? message, [Object? error, StackTrace? stackTrace]) =>
-      _logger.shout(message, error, stackTrace);
+  void shout(Object? message, [Object? error, StackTrace? stackTrace]) => _logger.shout(message, error, stackTrace);
 }
