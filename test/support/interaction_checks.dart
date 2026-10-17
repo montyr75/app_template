@@ -11,7 +11,8 @@ import 'package:material_ui/material_ui.dart';
 const _cursorSearchDepth = 6;
 
 /// Fails, listing every offender, when the pumped tree has (a) a tappable `GestureDetector` with no click-cursor
-/// `MouseRegion` just above it, or (b) an `IconButton` or [TapTarget] with no text label and no tooltip.
+/// `MouseRegion` just above it, or (b) an `IconButton` or [TapTarget] with no naming text and no tooltip. Naming text
+/// has a letter or a digit; a lone glyph such as an arrow names nothing.
 Future<void> expectDesktopReady(WidgetTester tester) async {
   final offenders = <String>[];
   await _rebuildAsDesktop(tester, () {
@@ -30,7 +31,7 @@ Future<void> expectDesktopReady(WidgetTester tester) async {
         offenders.add('no tooltip: IconButton ${_describe(element)}');
       }
 
-      if (widget is TapTarget && widget.enabled && (widget.tooltip ?? '').isEmpty && !_hasText(element)) {
+      if (widget is TapTarget && widget.enabled && (widget.tooltip ?? '').isEmpty && !_hasNamingText(element)) {
         offenders.add('no tooltip: TapTarget ${_describe(element)}');
       }
     }
@@ -120,11 +121,20 @@ bool _insideTextInput(Element element) {
   return inside;
 }
 
-bool _hasText(Element element) {
+/// A letter or a digit in any script; a glyph alone ("←", "×") does not name a control.
+final _naming = RegExp(r'[\p{L}\p{N}]', unicode: true);
+
+bool _hasNamingText(Element element) {
   var found = false;
   void visit(Element e) {
     if (found) return;
-    if (e.widget is Text) {
+    final text = switch (e.widget) {
+      Text(:final data?) => data,
+      Text(:final textSpan?) => textSpan.toPlainText(),
+      RichText(:final text) => text.toPlainText(),
+      _ => null,
+    };
+    if (text != null && _naming.hasMatch(text)) {
       found = true;
       return;
     }
