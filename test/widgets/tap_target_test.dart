@@ -243,6 +243,15 @@ void main() {
     expect('$failure', contains('no tooltip: TapTarget'));
   });
 
+  testWidgets('the guard passes a disabled target, whose detector keeps its press callbacks but taps nothing', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_app(child: const Text('Back')));
+
+    expect(tester.widget<GestureDetector>(find.byType(GestureDetector)).onTapDown, isNotNull);
+    expect(await _guardFailure(tester), isNull);
+  });
+
   testWidgets('the guard treats a lone glyph as no name, and a word as one', (tester) async {
     await tester.pumpWidget(_app(onTap: () {}, child: const Text('←')));
     expect('${await _guardFailure(tester)}', contains('no tooltip: TapTarget'));

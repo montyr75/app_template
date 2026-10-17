@@ -19,6 +19,9 @@ Future<void> expectDesktopReady(WidgetTester tester) async {
     for (final element in tester.allElements.toList()) {
       final widget = element.widget;
 
+      // A disabled TapTarget keeps its detector's press callbacks (gated inside), but its detector taps nothing.
+      if (widget is GestureDetector && _isDisabledTapTargetDetector(element)) continue;
+
       if (widget is GestureDetector &&
           (widget.onTap != null || widget.onTapDown != null || widget.onLongPress != null)) {
         if (_insideTextInput(element) || _isModalBarrier(element)) continue;
@@ -107,6 +110,21 @@ bool _isModalBarrier(Element element) {
     return ++depth < _cursorSearchDepth;
   });
   return found;
+}
+
+/// Whether the detector at [element] is a disabled [TapTarget]'s own: the first detector above it is none, and the
+/// first TapTarget above it is disabled.
+bool _isDisabledTapTargetDetector(Element element) {
+  var disabled = false;
+  element.visitAncestorElements((ancestor) {
+    final widget = ancestor.widget;
+    if (widget is TapTarget) {
+      disabled = !widget.enabled;
+      return false;
+    }
+    return widget is! GestureDetector;
+  });
+  return disabled;
 }
 
 bool _insideTextInput(Element element) {
