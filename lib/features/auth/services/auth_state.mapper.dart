@@ -35,17 +35,26 @@ class AuthStateMapper extends ClassMapperBase<AuthState> {
     _$user,
     opt: true,
   );
+  static bool _$isRestoring(AuthState v) => v.isRestoring;
+  static const Field<AuthState, bool> _f$isRestoring = Field(
+    'isRestoring',
+    _$isRestoring,
+    opt: true,
+    def: false,
+  );
 
   @override
   final MappableFields<AuthState> fields = const {
     #isLoading: _f$isLoading,
     #user: _f$user,
+    #isRestoring: _f$isRestoring,
   };
 
   static AuthState _instantiate(DecodingData data) {
     return AuthState(
       isLoading: data.dec(_f$isLoading),
       user: data.dec(_f$user),
+      isRestoring: data.dec(_f$isRestoring),
     );
   }
 
@@ -108,7 +117,7 @@ extension AuthStateValueCopy<$R, $Out> on ObjectCopyWith<$R, AuthState, $Out> {
 
 abstract class AuthStateCopyWith<$R, $In extends AuthState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({bool? isLoading, AppUser? user});
+  $R call({bool? isLoading, AppUser? user, bool? isRestoring});
   AuthStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -121,16 +130,18 @@ class _AuthStateCopyWithImpl<$R, $Out>
   late final ClassMapperBase<AuthState> $mapper =
       AuthStateMapper.ensureInitialized();
   @override
-  $R call({bool? isLoading, Object? user = $none}) => $apply(
+  $R call({bool? isLoading, Object? user = $none, bool? isRestoring}) => $apply(
     FieldCopyWithData({
       if (isLoading != null) #isLoading: isLoading,
       if (user != $none) #user: user,
+      if (isRestoring != null) #isRestoring: isRestoring,
     }),
   );
   @override
   AuthState $make(CopyWithData data) => AuthState(
     isLoading: data.get(#isLoading, or: $value.isLoading),
     user: data.get(#user, or: $value.user),
+    isRestoring: data.get(#isRestoring, or: $value.isRestoring),
   );
 
   @override

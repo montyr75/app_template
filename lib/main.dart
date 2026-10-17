@@ -12,6 +12,7 @@ import 'dev/dev_config.dart';
 import 'dev/marionette_config.dart';
 import 'features/app/services/app/app_service.dart';
 import 'features/app/services/theme/theme_service.dart';
+import 'features/auth/presentation/auth_restoring_gate.dart';
 import 'firebase_options.dart';
 import 'routes.dart';
 
@@ -78,9 +79,12 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
       restorationScopeId: 'app',
       routerConfig: ref.watch(goRouterProvider),
       // Bridges theme and localizations to packages still on package:flutter/material.dart (flutter_smart_dialog,
-      // awesome_flutter_extensions).
+      // awesome_flutter_extensions). The gate hides the first frames until FirebaseAuth has restored any persisted
+      // user, so a signed-in user never sees the login page flash.
       // ignore: deprecated_member_use
-      builder: (context, child) => MaterialUiCompatibilityBridge(child: FlutterSmartDialog.init()(context, child)),
+      builder: (context, child) => MaterialUiCompatibilityBridge(
+        child: FlutterSmartDialog.init()(context, AuthRestoringGate(child: child)),
+      ),
     );
   }
 
